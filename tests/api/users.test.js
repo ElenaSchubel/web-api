@@ -25,3 +25,29 @@ test.cb('getUsers gets all users', function (t) {
     })
 })
 
+test.cb('getUsers single user', function (t) {
+  var expected = 1
+  request(app)
+  .get('/users/99901')
+  .expect('Content-Type', /json/)
+  .expect(200)
+  .end(function (err,res){
+    if(err) throw err
+    t.is (res.body.users.length, expected)
+    t.end()
+  })
+})
+
+test.cb('addUser', (t) => {
+  var expected = 1
+  request(app)
+  .get('/add')
+  .expect('Content-Type',/json/)
+  .expect(302)
+  .end(function (err,res) {
+    if (err) throw err
+    t.is (res.body.name, expected)
+    t.end()
+  })
+
+})
