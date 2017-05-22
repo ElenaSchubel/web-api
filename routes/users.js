@@ -23,11 +23,14 @@ router.get ('/:id', (req,res)=> {
     })
   })
 
-  router.post ('/users/add', (req,res) => {
-    db.addUser(res.body, req.app.get('knex') =>
-  .then(funtion (users){
-    res.json({users})
-    }))
+  router.post ('/add', (req,res) => {
+    db.addUser(req.body.user,req.app.get('knex'))
+    .then(function (user_id) {
+      res.status(201).json({user_id:user_id[0]})
+    })
+    .catch(function (err) {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
   })
 
 module.exports = router

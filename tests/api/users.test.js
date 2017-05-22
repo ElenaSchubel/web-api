@@ -39,15 +39,16 @@ test.cb('getUsers single user', function (t) {
 })
 
 test.cb('addUser', (t) => {
-  var expected = 1
-  request(app)
-  .get('/add')
-  .expect('Content-Type',/json/)
-  .expect(302)
-  .end(function (err,res) {
-    if (err) throw err
-    t.is (res.body.name, expected)
+  var expected = 99927 //returning id of the 27th object
+  var user = {name: "bob", email: 'ger'} //the data we propose to send to the db
+  request(app) //requesting (testing) the server
+  .post('/users/add') //posting to the route
+  .send({user}) //sending the proposed data as req.body.user
+  .expect('Content-Type',/json/) //the returned object/variable is json (not string)
+  .expect(201) //expected a 201 status code for CREATED
+  .end(function (err,res) { //callback
+    if (err) throw err //no error
+    t.is (res.body.user_id, expected) //the returned user_id on res.body is the expected user_id
     t.end()
   })
-
 })

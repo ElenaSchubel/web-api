@@ -13,6 +13,7 @@ function getUser (id, knex) {
   return knex('users').where('id', id)
 }
 
-function addUser (id,knex) {
-  return knex('users').where('id',id)
+function addUser (user,knex) {
+return knex('users').insert({name: user.name, email: user.email})
+
 }
