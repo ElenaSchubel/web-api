@@ -37,3 +37,18 @@ test('addUser', (t) => {
     t.is(actual,expected)
   })
 })
+
+test('updateUser', (t) => {
+  var expected = 'bob'
+  var user = {name: "bob", email: 'ger'}
+  var id = 99901
+  return db.updateUser(user, id, t.context.db)
+  .then(function (result){
+    console.log(result);
+    return db.getUser(id, t.context.db).then(function (user){
+      console.log(user);
+      var actual= user[0].name
+      t.is(actual,expected)
+    })
+  })
+})

@@ -38,7 +38,7 @@ test.cb('getUsers single user', function (t) {
   })
 })
 
-test.cb('addUser', (t) => {
+test.cb('addUser', (t) => { //Insert
   var expected = 99927 //returning id of the 27th object
   var user = {name: "bob", email: 'ger'} //the data we propose to send to the db
   request(app) //requesting (testing) the server
@@ -49,6 +49,21 @@ test.cb('addUser', (t) => {
   .end(function (err,res) { //callback
     if (err) throw err //no error
     t.is (res.body.user_id, expected) //the returned user_id on res.body is the expected user_id
+    t.end()
+  })
+})
+
+test.cb('updateUser', (t) => { //update
+  var expected = 1
+  var user = {name: "bob", email: 'ger'}
+  request (app)
+  .put('/users/99901')
+  .send({user})
+  .expect('Content-Type', /json/)
+  .expect(201)
+  .end(function (err,res) {
+    if (err) throw err
+    t.is (res.body.row, expected)
     t.end()
   })
 })

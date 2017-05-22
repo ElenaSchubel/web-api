@@ -23,7 +23,7 @@ router.get ('/:id', (req,res)=> {
     })
   })
 
-  router.post ('/add', (req,res) => {
+  router.post ('/add', (req,res) => {//insert new user
     db.addUser(req.body.user,req.app.get('knex'))
     .then(function (user_id) {
       res.status(201).json({user_id:user_id[0]})
@@ -32,5 +32,17 @@ router.get ('/:id', (req,res)=> {
       res.status(500).send('DATABASE ERROR: ' + err.message)
     })
   })
+ router.put('/:id', (req,res) => { //update new user 
+   db.updateUser(req.body.user,req.params.id, req.app.get('knex'))
+   .then(function (result) {
+     res.status(201).json({row:result})
+   })
+   .catch(function (err) {
+     res.status(500).send('DATABASE ERROR: ' + err.message)
+   })
+ })
+
+
+
 
 module.exports = router
